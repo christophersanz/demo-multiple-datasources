@@ -1,0 +1,45 @@
+version: '3.7'
+services:
+    adminer:
+        image: adminer:latest
+        container_name: adminer
+        restart: always
+        depends_on:
+            - dbPostgres
+            - dbMysql
+            - dbMongo
+        ports:
+            - 9090:8080
+    dbPostgres:
+        image: postgres
+        container_name: container-postgresdb
+        restart: always
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: root
+    dbMysql:
+        image: mysql
+        container_name: container-mysqldb
+        restart: always
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password  
+    dbMongo:
+        image: mongo:latest
+        container_name: container-mongodb
+        restart: always
+        ports:
+            - 27017:27017
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: password
+            MONGO_INITDB_DATABASE: admin
+            
+#https://medium.com/@etiennerouzeaud/play-databases-with-adminer-and-docker-53dc7789f35f
